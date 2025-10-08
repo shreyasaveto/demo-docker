@@ -1,0 +1,14 @@
+# Python environment files
+__pycache__
+*.pyc
+.venv
+venv
+env
+.env
+
+# IDE files (e.g., VS Code, PyCharm)
+.vscode/
+.idea/
+
+# Docker build files
+!.dockerignore
