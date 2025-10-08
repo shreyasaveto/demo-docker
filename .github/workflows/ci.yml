@@ -1,9 +1,9 @@
-name: Docker Build & Push
+name: Docker Build & Push (No Cache)
 
 on:
   push:
     branches:
-      - main  # or your branch name
+      - main   # Replace with your branch if different
   workflow_dispatch:
 
 jobs:
@@ -11,8 +11,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout repository
-      - name: Checkout code
+      # 1️⃣ Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       # 2️⃣ Log in to Docker Hub
@@ -22,10 +22,10 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # 3️⃣ Build and push Docker image (no cache)
+      # 3️⃣ Build and push Docker image (NO cache)
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
-          tags: yourusername/fastapi-demo:latest
+          tags: shreyasaveto/fastapi-demo:latest
