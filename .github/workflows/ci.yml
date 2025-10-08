@@ -1,9 +1,9 @@
-name: Docker Build & Push (No Cache)
+name: Docker Build & Push (Working)
 
 on:
   push:
     branches:
-      - main   # Replace with your branch if different
+      - main
   workflow_dispatch:
 
 jobs:
@@ -22,10 +22,19 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # 3️⃣ Build and push Docker image (NO cache)
+      # 3️⃣ Set up Buildx with docker-container driver
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver: docker-container
+          install: true
+
+      # 4️⃣ Build and push Docker image
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
           tags: shreyasaveto/fastapi-demo:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
