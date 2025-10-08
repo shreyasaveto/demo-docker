@@ -1,0 +1,34 @@
+name: Docker CI/CD Pipeline
+
+# 1. Define when the workflow runs
+on:
+  push:
+    branches:
+      - main # Run whenever code is pushed to the main branch
+
+# 2. Define the jobs (series of steps)
+jobs:
+  build-and-push-docker:
+    runs-on: ubuntu-latest # Use a standard GitHub runner environment
+    
+    steps:
+      - name: 📦 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔑 Log in to Docker Hub
+        # This GitHub Action securely logs into Docker Hub using secrets
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }} # Uses the secret for your ID (shreyasaveto)
+          password: ${{ secrets.DOCKER_PASSWORD }} # Uses the secret for your password/token
+
+      - name: 🛠 Build and push Docker image
+        # This GitHub Action builds the image and pushes it to Docker Hub
+        uses: docker/build-push-action@v5
+        with:
+          context: . # Look for the Dockerfile in the current directory
+          push: true # Perform the push operation
+          # The tag must include your Docker Hub ID and the image name
+          tags: ${{ secrets.DOCKER_USERNAME }}/fastapi-demo:latest # e.g., shreyasaveto/fastapi-demo:latest
+          cache-from: type=gha # Optional: Uses GitHub Actions cache for faster subsequent builds
+          cache-to: type=gha,mode=max
