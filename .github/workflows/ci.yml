@@ -19,8 +19,8 @@ jobs:
         # This GitHub Action securely logs into Docker Hub using secrets
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKER_USERNAME }} # Uses the secret for your ID (shreyasaveto)
-          password: ${{ secrets.DOCKER_PASSWORD }} # Uses the secret for your password/token
+          username: ${{ secrets.shreyasaveto }} # Uses the secret for your ID (shreyasaveto)
+          password: ${{ secrets.aveto123456789 }} # Uses the secret for your password/token
 
       - name: 🛠 Build and push Docker image
         # This GitHub Action builds the image and pushes it to Docker Hub
@@ -29,6 +29,6 @@ jobs:
           context: . # Look for the Dockerfile in the current directory
           push: true # Perform the push operation
           # The tag must include your Docker Hub ID and the image name
-          tags: ${{ secrets.DOCKER_USERNAME }}/fastapi-demo:latest # e.g., shreyasaveto/fastapi-demo:latest
+          tags: ${{ secrets.shreyasaveto }}/fastapi-demo:latest # e.g., shreyasaveto/fastapi-demo:latest
           cache-from: type=gha # Optional: Uses GitHub Actions cache for faster subsequent builds
           cache-to: type=gha,mode=max
